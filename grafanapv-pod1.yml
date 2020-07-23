@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-pv-pod1
+  labels:
+    env: monitor-grafana
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: task-pv-claim1
+  containers:
+    - name: task-pv-container
+      image: laxmanch341/grafana:v7
+      ports:
+        - containerPort: 3000
+          name: "grafana-server"
+      volumeMounts:
+        - mountPath: "/var/lib/grafana"
+          name: task-pv-storage
